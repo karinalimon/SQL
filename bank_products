@@ -41,3 +41,13 @@ Select product_name, interest_rate
 From bank_products
 where product_type='Savings' AND interest_rate>0.75 AND monthly_fee=0;
 
+--You know that your bank offers a service for businesses. Use LIKE to list the product name that starts with the word 'Business'.
+Select product_ame
+From bank_products
+Where product_name LIKE 'business%';
+
+A new customer wants something with rewards. Show the name and description for all products that have the word reward in either the nam eor description.
+Select product_name, description
+From bank_products
+Where product_name LIKE '%reward%' OR description LIKE '%reward%';
+
