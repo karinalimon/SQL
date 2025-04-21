@@ -1,0 +1,61 @@
+CREATE TABLE seasons (
+  id INTEGER PRIMARY KEY
+, season_name TEXT);
+
+CREATE TABLE sports (
+  sport_id INTEGER PRIMARY KEY
+, sport_name TEXT
+, season_id INTEGER);
+
+INSERT INTO seasons VALUES
+  (1, 'spring')
+, (2, 'summer')
+, (3, 'fall')
+, (4, 'winter')
+;
+
+INSERT INTO sports VALUES
+  (1, 'pickleball', NULL)
+, (2, 'salsa dancing', 2)
+, (3, 'soccer', 1)
+, (4, 'softball', 2)
+, (5, 'volleyball', 4)
+;
+
+
+
+----1. INNER JOIN: a
+SELECT seasons.id
+, seasons.season_name
+, sports.sport_name
+FROM seasons
+INNER JOIN sports
+ON seasons.id = sports.season_id
+ORDER BY sports.season_id;
+
+--2.  LEFT JOIN:[insert answer]
+SELECT seasons.id
+, seasons.season_name
+, sports.sport_name
+FROM seasons
+LEFT JOIN sports
+ON seasons.id = sports.season_id
+ORDER BY sports.season_id;
+
+--3. RIGHT JOIN: [insert answer]
+SELECT seasons.id
+, seasons.season_name
+, sports.sport_name
+FROM seasons
+RIGHT JOIN sports
+ON seasons.id = sports.season_id
+ORDER BY sports.season_id;
+
+--4. FULL JOIN: [insert answer]
+SELECT seasons.id
+, seasons.season_name
+, sports.sport_name
+FROM seasons
+FULL JOIN sports
+ON seasons.id = sports.season_id
+ORDER BY sports.season_id;
