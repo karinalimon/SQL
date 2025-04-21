@@ -67,3 +67,25 @@ inner join shipments
 on customers.customer_id = shipments.customer_id
 where shipments.shipping_method <> 'Express';
 
+--Show the customer name and the package description for all customers and all shipments.
+select customers.customer_name AS Customer_Name, shipments.package_description AS Details
+from customers
+full join shipments
+on customers.customer_id = shipments.customer_id;
+
+--Display the shipment id, shipping address, and weight for all shipments weighing 3 or more kilograms. Order the results from heaviest to lightest.
+select shipments.shipment_id,  customers.shipping_address, shipments.weight_kg
+from customers
+Right join shipments
+on shipments.customer_id = customers.customer_id
+where shipments.weight_kg >= 3 
+ORDER BY shipments.weight_kg desc;
+
+--Display the billing address, shipping address, and shipping id for all customers whose billing address is in Texas (billing address contains ‘TX’).
+select customers.customer_name, customers.billing_address, customers.shipping_address, shipments.shipment_id
+from customers
+left join shipments
+on customers.customer_id = shipments.customer_id
+where customers.billing_address LIKE '%TX%';
+
+
