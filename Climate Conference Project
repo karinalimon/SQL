@@ -139,7 +139,7 @@ inner join reservations as Welcome
 on Dinner.member_id = Welcome.member_id;
 
 --List the VIPS and the events they are apart of.
-select vips.last_name AS Last, vips.first_name AS First, events.event_name Name_of_Event, events.event_type AS Type_of_Event
+select vips.last_name AS Last, vips.first_name AS First, events.event_name AS Name_of_Event, events.event_type AS Type_of_Event
 from vips
 inner join events
 on vips.event = events.event_id
