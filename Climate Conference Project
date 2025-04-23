@@ -1,0 +1,169 @@
+62
+,(3460, 'Chen', 'Beverly', 7, 4361, 'US Department of Natural Resources', 'government', 2008)
+63
+,(2716, 'Rodriguez', 'Sofia', 7, 3775, 'US Department of Renewable Energy', 'government', 2003)
+64
+,(2800, 'Lee', 'Min-Jun', NULL, NULL, 'US Department of Renewable Energy', 'government', 2004)
+65
+;
+66
+​
+67
+​
+68
+INSERT INTO reservations VALUES
+69
+ (3491,  1, 1, 1)
+70
+,(4361,  1, 1, 1)
+71
+,(3047,  2, 1, 1)
+72
+,(3775,  1, 1, 1)
+73
+,(4003,  3, 0, 1)
+74
+,(4402,  2, 1, 1)
+75
+,(3891,  3, 1, 1)
+76
+,(2011,  1, 1, 1)
+77
+,(4808,  2, 1, 1)
+78
+,(3490,  1, 0, 1)
+79
+,(3189,  1, 1, 1)
+80
+,(1944,  1, 0, 1)
+81
+,(2716,  2, 0, 1)
+82
+,(2551,  2, 1, 1)
+83
+,(4386,  2, 0, 1)
+84
+,(2814,  3, 1, 1)
+85
+,(1738,  2, 0, 1)
+86
+,(3960,  1, 1, 1)
+87
+,(4315,  3, 1, 0)
+88
+,(4722,  2, 1, 1)
+89
+,(2731,  3, 1, 1)
+90
+,(2091,  1, 1, 0)
+91
+,(3889,  3, 1, 1)
+92
+,(3742,  2, 0, 1)
+93
+,(3719,  2, 0, 1)
+94
+,(3460,  2, 1, 1)
+95
+,(3077,  2, 0, 1)
+96
+,(4420,  1, 1, 0)
+97
+,(2800,  2, 0, 1)
+98
+,(1934,  3, 1, 1)
+99
+;
+100
+​
+101
+​
+102
+INSERT INTO events VALUES
+103
+  (1, 'Climate Change Communication: Engaging the Public and Policy Makers', 'Keynote')
+104
+, (2, 'Climate Change and Public Health: Risks and Responses', 'Panel')
+105
+, (3, 'Climate Change and Agriculture: Ensuring Food Security', 'Panel')
+106
+, (4, 'Biodiversity and Ecosystem Services in a Changing Climate', 'Panel')
+107
+, (5, 'Indigenous Knowledge and Climate Change Adaptation', 'Panel')
+108
+, (6, 'The Role of Oceans in Climate Change: Impacts and Solutions', 'Panel')
+109
+, (7, 'Climate Change and Renewable Energy: Innovations and Challenges', 'Panel')
+110
+, (8, 'Climate Justice and Equity: Addressing Disproportionate Impacts', 'Panel')
+111
+, (9, 'The Economic Impact of Climate Change: Costs and Opportunities', 'Panel')
+112
+, (10, 'Technological Innovations for Climate Monitoring and Assessment', 'Workshop')
+113
+, (11, 'Urban Resilience: Designing Climate-Smart Cities', 'Workshop')
+114
+, (12, 'The Role of Policy in Combating Climate Change', 'Workshop')
+115
+;
+116
+​
+117
+​
+118
+INSERT INTO hotels VALUES
+119
+   (1, 'Hyatt Downtown', '392 South Main Street, Cityville, PA')
+120
+ , (2, 'Marriott', '1240 Marshall Avenue, Cityville, PA')
+121
+ , (3, 'Four Season''s', '900 Winter Road, Cityville, PA')
+
+
+
+--How many VIPS are there?
+select count(*) as Number_of_VIPS
+from vips;
+
+--List the last and first names of all VIPS who are panelists.
+select last_name, first_name, event_type
+from vips
+left join events
+on vips.event = events.event_id
+where event_type = 'Panel';
+
+--List how many VIPS are going to dinner and how many are going to the welcome.
+select sum(welcome.welcome_rsvp), sum(dinner.dinner_rsvp)
+from reservations as Dinner
+inner join reservations as Welcome
+on Dinner.member_id = Welcome.member_id;
+
+--List the VIPS and the events they are apart of.
+select vips.last_name AS Last, vips.first_name AS First, events.event_name Name_of_Event, events.event_type AS Type_of_Event
+from vips
+inner join events
+on vips.event = events.event_id
+
+--Retrieve event names, attendee names, and their hotel names.
+select vips.first_name, vips.last_name, events.event_name, hotels.hotel_name 
+from vips
+inner join events
+on vips.event = events.event_id
+left join reservations
+on vips.member_id = reservations.member_id
+left join hotels
+on reservations.hotel = hotels.hotel_id;
+
+--Find VIPs staying at the hotel with the most reservations.
+SELECT vips.first_name, vips.last_name, hotels.hotel_name
+FROM vips 
+JOIN reservations 
+ON vips.member_id = reservations.member_id
+JOIN hotels
+ON reservations.hotel = hotels.hotel_id
+WHERE reservations.hotel = (
+    SELECT hotel 
+    FROM reservations 
+    GROUP BY hotel 
+    ORDER BY COUNT(*) DESC);
+
