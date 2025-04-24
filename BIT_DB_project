@@ -1,0 +1,40 @@
+--How many unique orders wer eplaced in Jan?
+select county(distinct orderid)
+from BIT_DB.JanSales
+where length(orderID) = 6 AND orderID <> 'Order ID';
+
+--How many of those wer efor an iPhone?
+Select count(distinct orderID)
+from BIT_DB.JanSales
+where product = 'iPhone' AND length(orderid) = 6 AND orderid <> 'Order ID';
+
+--Select the customer account numbers for all orders that were placed in Feb.
+select distinct(acctnum)
+from BIT_DB.customers
+inner join BIT_DB.FebSales
+on customers.order_id = FebSales.orderid
+Where length(orderid) = 6 AND orderid <> 'Order ID';
+
+--Which product was the cheapest one sold in Jan and what was the price?
+Select distinct product, min(price)
+from BIT_DB.JanSasles
+group by product, price
+oder by price ASC;
+
+--What is the total revenue for each product sold in Jan?
+select distinct product, sum(price)
+from BIT_DB.JanSales
+group by product, price;
+
+--Which products were sold in Feb at '548 Lincon St, Seattle WA 98101' and how many were sold and what was the total revenue?
+select distinct product, quantity, sum(quantity)*price AS Revenue
+from BIT_DB.FebSales
+where location LIKE '%548 Lincoln St%';
+
+--How many customers ordered more than 2 products at a tim ein Feb and what was the average amount spent for those customers?
+select count(distinct customers.acctnum), avg(quantity*price) AS amount_spent
+from BIT_DB.FebSales
+left join BIT_DB.customers
+on FebSales.orderid = customers.order_id
+where FEbSales.quantity > 2 AND length(orderid) = 6 AND orderid <> 'Order ID';
+
