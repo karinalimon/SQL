@@ -3,7 +3,7 @@ select county(distinct orderid)
 from BIT_DB.JanSales
 where length(orderID) = 6 AND orderID <> 'Order ID';
 
---How many of those wer efor an iPhone?
+--How many of those were for an iPhone?
 Select count(distinct orderID)
 from BIT_DB.JanSales
 where product = 'iPhone' AND length(orderid) = 6 AND orderid <> 'Order ID';
@@ -25,6 +25,8 @@ oder by price ASC;
 select distinct product, sum(price)
 from BIT_DB.JanSales
 group by product, price;
+
+
 
 --Which products were sold in Feb at '548 Lincon St, Seattle WA 98101' and how many were sold and what was the total revenue?
 select distinct product, quantity, sum(quantity)*price AS Revenue
@@ -54,4 +56,43 @@ FROM BIT_DB.FebSales
 WHERE orderdate like '02/18/19%';
 
 --List all the products sold in Los Angeles in February, and include how many of each were sold.SELECT sum(quantity)
+select product, sum(quantity)
 from FebSales
+where location LIKE '%Los Angeles%'
+group by product;
+
+--Which locations in New York received at least 3 orders in January, and how many orders did they each receive?
+select distinct location, quantity, orderid
+from BIT_DB.JanSales
+where location LIKE '%NY%' 
+group by quantity
+Having quantity >= 3;
+
+--How many of each type of headphone were sold in February?
+Select product, sum(quantity)
+from FebSales
+where product LIKE '%headphone%'
+group by product;
+
+--What was the average amount spent per account in February?
+Select avg(quantity*price)
+from FebSales
+left join customers
+on FebSales.orderid = customers.order_id
+where length(orderid) = 6 
+AND orderid <> 'Order ID';
+
+--What was the average quantity of products purchased per account in February?
+select sum(quantity)/count(acctnum)
+from febsales
+left join customers
+on febsales.orderid = customers.order_id
+where length(orderid) = 6 AND orderid <> 'Order ID';
+
+--Which product brought in the most revenue in January and how much revenue did it bring in total?
+SELECT product, 
+sum(quantity*price)
+FROM BIT_DB.JanSales 
+GROUP BY product
+ORDER BY sum(quantity*price) desc 
+LIMIT 1;
