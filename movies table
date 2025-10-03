@@ -1,0 +1,9 @@
+--movies table
+select *
+from movies;
+
+--Let’s only select the name and genre columns of the table.
+SELECT name, genre 
+FROM movies;
+
+--
