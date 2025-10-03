@@ -6,4 +6,34 @@ from movies;
 SELECT name, genre 
 FROM movies;
 
+--Edit your query so that it returns the name, genre, and year columns of the table.
+select name, genre, year
+from movies;
+
+--To showcase what the AS keyword does, select the name column and rename it with an alias of your choosing.
+SELECT name AS 'What I Call It'
+FROM movies;
+
+--Edit the query so that instead of selecting and renaming the name column, select the imdb_rating column and rename it as IMDb
+select imdb_rating as 'IMDb'
+from movies;
+
+--What are the unique genres?
+SELECT DISTINCT genre 
+FROM movies;
+
+--Now, change the code so we return the unique values of the year column instead.
+select distinct year
+from movies;
+
+--Suppose we want to take a peek at all the not-so-well-received movies in the database.
+select *
+from movies
+where imdb_rating < 5;
+
+--Now retrieve all the recent movies, specifically those that were released after 2014.
+select *
+from movies
+where year > 2014;
+
 --
