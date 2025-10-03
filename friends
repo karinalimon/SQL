@@ -1,0 +1,57 @@
+--Some practice
+
+-create table
+create table friends
+(id integer,
+name text,
+birthday date);
+
+--add Ororo with birthday
+insert into friends (id, name, birthday)
+values (1, 'Ororo Munroe', '1940-05-30');
+
+-check that she's been added
+select *
+from friends;
+
+--add two more friends
+insert into friends (id, name, birthday)
+values (2, 'Carla', '1980-11-15');
+
+insert into friends (id, name, birthday)
+values (3, 'Sunny', '1990-12-25');
+
+--Change Ororo's name to Storm
+update friends
+set name = 'Storm'
+where id = 1;
+
+--add a column named email
+alter table friends
+add column email text;
+
+--Add Storm's email
+update friends
+set email = 'storm@weatherwiz.com'
+where id = 1;
+
+--add the other emails
+update friends
+set email = 'iamcarlamontoya@youkilledmyfatherprepareto.die'
+where id = 2;
+
+update friends
+set email = 'sunny@isactuallyagoth.com'
+where id = 3;
+
+--check everything
+select *
+from friends;
+
+--realize Storm only exists in your head so remove her.
+delete from friends
+where id = 1;
+
+--take another look
+sELECT * 
+FROM friends;
