@@ -120,4 +120,56 @@ SELECT *
 FROM movies
 WHERE genre = 'romance' or genre = 'comedy';
 
---
+--sort everything by the movie’s title from A through Z
+SELECT *
+FROM movies
+ORDER BY name;
+
+--select all of the well-received movies, sorted from highest to lowest by their year
+SELECT *
+FROM movies
+WHERE imdb_rating > 8
+ORDER BY year DESC;
+
+--Write a new query that retrieves the name, year, and imdb_rating columns of all the movies, ordered highest to lowest by their ratings.
+SELECT name, year, imdb_rating
+FROM movies
+ORDER BY imdb_rating desc;
+
+--write a query that returns the top 3 highest rated movies.
+SELECT *
+FROM movies
+order by imdb_rating desc
+LIMIT 3;
+
+--If the rating is above 8, then it is Fantastic. If the rating is above 6, then it is Poorly Received. Else, Avoid at All Costs.
+SELECT name,
+ CASE
+  WHEN imdb_rating > 8 THEN 'Fantastic'
+  WHEN imdb_rating > 6 THEN 'Poorly Received'
+  ELSE 'Avoid at All Costs'
+ END
+FROM movies;
+
+--rename the column to ‘Review’
+SELECT name,
+ CASE
+  WHEN imdb_rating > 8 THEN 'Fantastic'
+  WHEN imdb_rating > 6 THEN 'Poorly Received'
+  ELSE 'Avoid at All Costs'
+ END AS 'Review'
+FROM movies;
+
+--Select the name column and use a CASE statement to create the second column that is:
+--‘Chill’ if genre = 'romance'
+--‘Chill’ if genre = 'comedy'
+--‘Intense’ in all other cases
+--Optional: Rename the whole CASE statement to ‘Mood’ using AS.
+SELECT name,
+ CASE
+  WHEN genre = 'romance' THEN 'Chill'
+  WHEN genre = 'comedy' THEN 'Chill'
+  ELSE 'Intense'
+ END AS 'Mood'
+FROM movies;
+
