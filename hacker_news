@@ -55,3 +55,5 @@ FROM hacker_news
 where timestamp IS NOT NULL
 group by 1
 order by 2 desc;
+
+--
