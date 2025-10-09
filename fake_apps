@@ -1,0 +1,110 @@
+--count how many apps are in the table
+SELECT COUNT(*) 
+FROM fake_apps;
+
+--Add a WHERE clause in the previous query to count how many free apps are in the table
+select count(*)
+from fake_apps
+where price = 0.00;
+
+--What is the total number of downloads for all of the apps combined?
+select sum(downloads)
+from fake_apps;
+
+--How many downloads does the most popular app have?
+SELECT MAX(downloads)
+FROM fake_apps;
+
+--What is the least number of times an app has been downloaded?
+select min(downloads)
+from fake_apps;
+
+--Write a new query that returns the price of the most expensive app.
+select max(price)
+from fake_apps;
+
+-- average number of downloads for an ap
+select avg(downloads)
+from fake_apps;
+
+--Write a new query that calculates the average price for all the apps in the table.
+select avg(price)
+from fake_apps;
+
+--return the name column and a rounded price column.
+select name, round(price, 0)
+from fake_apps;
+
+--rounds this result to 2 decimal places.
+select round(avg(price), 2)
+from fake_apps;
+
+--might want to know the mean IMDb ratings for all movies each year. We could calculate each number by a series of queries with different WHERE statements
+SELECT AVG(imdb_rating)
+FROM movies
+WHERE year = 1999;
+
+SELECT AVG(imdb_rating)
+FROM movies
+WHERE year = 2000;
+
+SELECT AVG(imdb_rating)
+FROM movies
+WHERE year = 2001;
+
+-- use GROUP BY to do this in a single step
+SELECT year,
+   AVG(imdb_rating)
+FROM movies
+GROUP BY year
+ORDER BY year;
+
+--add a WHERE clause to count the total number of apps that have been downloaded more than 20,000 times, at each price.
+sELECT price, COUNT(*) 
+FROM fake_apps
+where downloads > 20000
+GROUP BY price;
+
+--Write a new query that calculates the total number of downloads for each category.
+sELECT category, sum(downloads) 
+FROM fake_apps
+GROUP BY category;
+
+--might want to know how many movies have IMDb ratings that round to 1, 2, 3, 4, 5.
+SELECT ROUND(imdb_rating),
+   COUNT(name)
+FROM movies
+GROUP BY ROUND(imdb_rating)
+ORDER BY ROUND(imdb_rating);
+
+--following query is equivalent to the one above:
+SELECT ROUND(imdb_rating),
+   COUNT(name)
+FROM movies
+GROUP BY 1
+ORDER BY 1;
+
+--Write the exact query, but use column reference numbers instead of column names after GROUP BY.
+SELECT category, 
+   price,
+   AVG(downloads)
+FROM fake_apps
+GROUP BY 1, 2;
+
+--When we want to limit the results of a query based on values of the individual rows, use WHERE. When we want to limit the results of a query based on an aggregate property, use HAVING.
+SELECT year,
+   genre,
+   COUNT(name)
+FROM movies
+GROUP BY 1, 2
+HAVING COUNT(name) > 10;
+
+--Add a HAVING clause to restrict the query to price points that have more than 10 apps. Because the condition has an aggregate function in it, we have to use HAVING instead of WHERE.
+SELECT price, 
+   ROUND(AVG(downloads)),
+   COUNT(*)
+FROM fake_apps
+GROUP BY price;
+HAVING Count(*) > 10;
+
+--
